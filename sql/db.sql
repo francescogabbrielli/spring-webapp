@@ -1,10 +1,15 @@
-# Script da eseguire come root
+# Script da eseguire come root per la creazione del DB
+#
+# per esempio in linux: sudo mariadb -p < sql/db.sql 
+#
 
 CREATE DATABASE `spring-webapp-db` /*!40100 COLLATE 'utf8mb3_general_ci' */;
 
 CREATE USER 'web'@'%' IDENTIFIED BY 'web';
 GRANT SELECT, DELETE, INSERT, UPDATE, EXECUTE  ON *.* TO 'web'@'%';
 FLUSH PRIVILEGES;
+
+USE `spring-webapp-db`;
 
 CREATE TABLE `users` (
 	`id` INT UNSIGNED NOT NULL AUTO_INCREMENT,

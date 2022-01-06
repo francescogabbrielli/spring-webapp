@@ -18,23 +18,27 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     DataSource dataSource;
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().dataSource(dataSource)
-                .usersByUsernameQuery(
-                        "SELECT * FROM users WHERE email=?")
-                .authoritiesByUsernameQuery(
-                        "SELECT r.* FROM roles r, user_roles ur, users u " +
-                        "WHERE ur.role_id = r.id AND ur.user_id = u.id AND u.email=?"
-                )
-                .passwordEncoder(new BCryptPasswordEncoder());
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+                .antMatchers("/", "/index", "/login", "/error", "/register", "/static/**", "/webjars/**").permitAll()
+                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") //autorizza le pagine utente
+                .antMatchers("/admin/**").hasRole("ADMIN") //autorizza le pagine admin
+                .anyRequest().authenticated()
+            .and().formLogin().loginPage("/login")
+            .and().logout();
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests()
-                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") //autorizza le pagine utente
-                .antMatchers("/admin/**").hasRole("ADMIN") //autorizza le pagine admin
-                .and().formLogin();
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.jdbcAuthentication().dataSource(dataSource)
+                .usersByUsernameQuery(
+                        "SELECT email AS principal, password AS credentials, TRUE FROM users WHERE email=?")
+                .authoritiesByUsernameQuery(
+                        "SELECT u.name AS principal, r.name AS role " +
+                        "FROM roles r, user_roles ur, users u " +
+                        "WHERE ur.role_id = r.id AND ur.user_id = u.id AND u.email=?"
+                )
+                .passwordEncoder(new BCryptPasswordEncoder());
     }
 
 }

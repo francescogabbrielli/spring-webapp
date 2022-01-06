@@ -1,36 +1,16 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8">
     <title>Registrazione</title>
-    <style type="text/css">
-        label {
-            display: inline-block;
-            width: 200px;
-            margin: 5px;
-            text-align: left;
-        }
-        input[type=text], input[type=password], select {
-            display: inline-block;
-            width: 200px;
-        }
-        input[type=radio] {
-            margin-left: 45px;
-        }
-        input[type=checkbox] {
-            margin-right: 190px;
-        }
-        button {
-            padding: 5px;
-            margin: 10px;
-        }
-        b {
-            color: red;
-        }
-    </style>
+    <link rel="stylesheet" href="css/main.css" type="text/css">
 </head>
 <body>
 <div align="center">
+
     <h1>Registrazione</h1>
+
+    <!-- errori di validazione -->
     <div th:if="${errors!=null}">
         <p th:each="error: ${errors}">
             <b>Errore: </b>
@@ -39,6 +19,13 @@
             '<span th:text="${error.getField()}"></span>'
         </p>
     </div>
+
+    <!-- errore DB -->
+    <div th:if="${error!=null}">
+        <b>Errore DB: <span th:text="${error.getMessage()}"></span></b>
+    </div>
+
+    <!-- form -->
     <form action="#" th:action="@{/register}" method="post" th:object="${user}">
         <label>Nome:</label>
         <input type="text" th:field="*{name}" th:required="required"/><br/>
@@ -57,6 +44,7 @@
 
         <button type="submit">Registrati</button>
     </form>
+
 </div>
 </body>
 </html>
