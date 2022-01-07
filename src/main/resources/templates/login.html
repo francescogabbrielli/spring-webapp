@@ -1,36 +1,64 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Login</title>
-    <link th:rel="stylesheet" th:href="@{/static/css/main.css}">
+    <link th:rel="stylesheet" th:href="@{/static/css/login.css}">
     <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/{v}/css/bootstrap.min.css(v=${bootstrapVersion})}">
 </head>
+
 <body>
-<div class="container border">
 
-    <h1>Login</h1>
+    <main class="form-signin">
 
-    <!-- errore login -->
-    <div th:if="${error!=null}">
-        <b><span th:text="${error}"></span></b>
-    </div>
+        <form method="post" th:action="@{/login}" th:object="${user}">
+            
+            <h1 class="h3 mb-3 fw-normal">Spring MVC Demo</h1>
 
-    <form method="post" th:action="@{/login}" th:object="${user}">
-        <label>E-mail:</label>
-        <input type="text" th:field="*{email}" th:required="required"/><br/>
+            <div class="form-floating">
+                <input type="email" th:field="*{email}" th:required="required" class="form-control" id="floatingInput"
+                    placeholder="name@example.com">
+                <label for="floatingInput">Email</label>
+            </div>
 
-        <label>Password:</label>
-        <input type="password" th:field="*{password}" th:required="required"/><br/>
+            <div class="form-floating">
+                <input type="password" th:field="*{password}" th:required="required" class="form-control"
+                    id="floatingPassword" placeholder="Password">
+                <label for="floatingPassword">Password</label>
+            </div>
 
-        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 
-        <button type="submit">Login</button>
-    </form>
+            <div class="checkbox mb-3">
+                <label>
+                    Ricordami <input type="checkbox" value="remember-me" th:field="*{remember}" />
+                </label>
+            </div>
 
-</div>
+            <button class="w-50 btn btn-lg btn-primary" type="submit">Login</button>
 
-<script th:src="@{/webjars/bootstrap/{v}/js/bootstrap.bundle.min.js(v=${bootstrapVersion})}"></script>
+            <p><br/><a th:href="@{/register}">Oppure Registrati</a></p>
+
+        </form>
+
+        <!-- errore login -->
+        <div class="alert alert-danger alert-dismissible fade show" th:if="${error!=null}">
+            <span th:text="${error}"></span></b>
+            <button type="button" class="btn-close" aria-label="Close" data-bs-dismiss="alert"></button>
+        </div>
+        <script>
+            window.addEventListener('load', (event) => {
+                var alertNode = document.querySelector('.alert')
+                var alert = new bootstrap.Alert(alertNode)
+                if (alert) setTimeout(() => alert.close(), 5000);
+            });
+        </script>
+
+    </main>
+
+    <script th:src="@{/webjars/bootstrap/{v}/js/bootstrap.bundle.min.js(v=${bootstrapVersion})}"></script>
 
 </body>
+
 </html>

@@ -1,50 +1,62 @@
 <!DOCTYPE html>
 <html lang="it" xmlns:th="http://www.thymeleaf.org">
+
 <head>
     <meta charset="UTF-8">
     <title>Registrazione</title>
-    <link rel="stylesheet" href="css/main.css" type="text/css">
+    <link th:rel="stylesheet" th:href="@{/static/css/login.css}">
+    <link th:rel="stylesheet" th:href="@{/webjars/bootstrap/{v}/css/bootstrap.min.css(v=${bootstrapVersion})}">
 </head>
+
 <body>
-<div align="center">
 
-    <h1>Registrazione</h1>
+    <main class="form-signin">
 
-    <!-- errori di validazione -->
-    <div th:if="${errors!=null}">
-        <p th:each="error: ${errors}">
-            <b>Errore: </b>
-            <span th:text="${error.getRejectedValue()}"></span>
-            <b> non è un valore accettabile per il campo </b>
-            '<span th:text="${error.getField()}"></span>'
-        </p>
-    </div>
+        <form method="post" th:action="@{/register}" th:object="${user}">
+            
+            <h1 class="h3 mb-3 fw-normal">Registrazione</h1>
 
-    <!-- errore DB -->
-    <div th:if="${error!=null}">
-        <b>Errore DB: <span th:text="${error.getMessage()}"></span></b>
-    </div>
+            <div class="form-label">
+                <label for="name">Nome</label>
+                <input type="text" th:field="*{name}" th:required="required" class="form-control" id="name" />
+            </div>
+            <div class="form-label">
+                <label for="surname">Cognome</label>
+                <input type="text" th:field="*{surname}" th:required="required" class="form-control" id="surname" />
+            </div>
+            <div class="form-label">
+                <label for="email">Email</label>
+                <input type="text" th:field="*{email}" th:required="required" class="form-control" id="email" />
+            </div>
+            <div class="form-label">
+                <label for="password">Password</label>
+                <input type="password" th:field="*{password}" th:required="required" class="form-control" id="password" />
+            </div>
+            <div class="form-label">
+                <label for="birthday">Data di nascita (GG-MM-AAAA)</label>
+                <input type="text" th:field="*{birthday}" th:required="required" class="form-control" id="birthday" />
+            </div>
 
-    <!-- form -->
-    <form action="#" th:action="@{/register}" method="post" th:object="${user}">
-        <label>Nome:</label>
-        <input type="text" th:field="*{name}" th:required="required"/><br/>
+            <p><button class="w-50 btn btn-lg btn-primary" type="submit">Vai!</button></p>
+            <p><br/></p>
 
-        <label>Cognome:</label>
-        <input type="text" th:field="*{surname}" th:required="required"/><br/>
+        </form>
 
-        <label>E-mail:</label>
-        <input type="text" th:field="*{email}" th:required="required"/><br/>
+        <!-- errori di validazione -->
+        <div class="alert alert-warning alert-dismissible fade show" th:if="${errors!=null}" th:each="error: ${errors}">
+            Errore: il valore
+            <i><span th:text="${error.getRejectedValue()}"></span></i>
+            non è ammesso per il campo <i><span th:text="${error.getField()}"></span></i>
+        </div>
+        <!-- errore DB -->
+        <div class="alert alert-danger alert-dismissible fade show" th:if="${error!=null}">
+            <b>Errore DB: <span th:text="${error}"></span></b>
+        </div>
 
-        <label>Password:</label>
-        <input type="password" th:field="*{password}" th:required="required"/><br/>
+    </main>
 
-        <label>Compleanno (GG-MM-AAAA):</label>
-        <input type="text" th:field="*{birthday}"  th:required="required"/><br/>
+    <script th:src="@{/webjars/bootstrap/{v}/js/bootstrap.bundle.min.js(v=${bootstrapVersion})}"></script>
 
-        <button type="submit">Registrati</button>
-    </form>
-
-</div>
 </body>
+
 </html>

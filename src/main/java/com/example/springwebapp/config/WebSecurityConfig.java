@@ -7,6 +7,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 
 import javax.sql.DataSource;
 
@@ -17,6 +18,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     DataSource dataSource;
 
+    @Autowired
+    AuthenticationFailureHandler authenticationFailureHandler;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
@@ -24,8 +28,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/user/**").hasAnyRole("USER", "ADMIN") //autorizza le pagine utente
                 .antMatchers("/admin/**").hasRole("ADMIN") //autorizza le pagine admin
                 .anyRequest().authenticated()
-            .and().formLogin().loginPage("/login")
-            .and().logout();
+            .and().formLogin().loginPage("/login").failureHandler(authenticationFailureHandler)
+            .and().logout().deleteCookies("JSESSIONID");
     }
 
     @Override
@@ -40,5 +44,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 )
                 .passwordEncoder(new BCryptPasswordEncoder());
     }
+    
 
 }

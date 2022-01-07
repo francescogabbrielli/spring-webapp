@@ -1,6 +1,6 @@
 # Script da eseguire come root per la creazione del DB
 #
-# per esempio in linux: sudo mariadb -p < sql/db.sql 
+# per esempio in linux (con password di root vuota): sudo mariadb -p < sql/db.sql 
 #
 
 CREATE DATABASE `spring-webapp-db` /*!40100 COLLATE 'utf8mb3_general_ci' */;
@@ -37,4 +37,3 @@ CREATE TABLE `user_roles` (
 	CONSTRAINT `FK_roles` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON UPDATE NO ACTION ON DELETE CASCADE
 )
 COLLATE='utf8mb3_general_ci';
-

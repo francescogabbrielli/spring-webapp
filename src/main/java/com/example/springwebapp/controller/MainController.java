@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public class MainController {
 
     @GetMapping("/")
-    public String index() { return "index"; }
+    public String index() { return "user/dashboard"; }
 
     @GetMapping("/error")
     public String error() { return "error"; }
