@@ -4,7 +4,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 
 import javax.sql.DataSource;
 
@@ -18,7 +17,7 @@ public class RoleService {
 
     @Autowired private DataSource dataSource;
 
-    public int getIdByName(String roleName) throws SQLException {
+    public long getIdByName(String roleName) throws SQLException {
 
         try (
             Connection c = dataSource.getConnection();
@@ -28,7 +27,7 @@ public class RoleService {
             s.setString(1, roleName);
             ResultSet rs = s.executeQuery();
             if(rs.next())
-                return rs.getInt(1);
+                return rs.getLong(1);
             
         }
 
