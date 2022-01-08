@@ -2,9 +2,9 @@
 <html lang="it" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Dashboard - ${user.name}</title>
+    <title th:text="|Dashboard - ${user.name}|"></title>
 </head>
 <body>
-
+<h1>Ciao <span th:text="${user.name}"></span></h1>
 </body>
 </html>

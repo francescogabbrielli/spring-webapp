@@ -17,9 +17,9 @@
             <h1 class="h3 mb-3 fw-normal">Spring MVC Demo</h1>
 
             <div class="form-floating">
-                <input type="email" th:field="*{email}" th:required="required" class="form-control" id="floatingInput"
+                <input type="email" name="username" th:value="${user.email}" th:required="required" class="form-control" id="floatingInput"
                     placeholder="name@example.com">
-                <label for="floatingInput">Email</label>
+                <label for="floatingInput">Username(email)</label>
             </div>
 
             <div class="form-floating">
@@ -28,11 +28,11 @@
                 <label for="floatingPassword">Password</label>
             </div>
 
-            <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
+            <!--input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" /-->
 
             <div class="checkbox mb-3">
                 <label>
-                    Ricordami <input type="checkbox" value="remember-me" th:field="*{remember}" />
+                    Ricordami <input type="checkbox" name="remember" th:checked="${user.remember}"/>
                 </label>
             </div>
 

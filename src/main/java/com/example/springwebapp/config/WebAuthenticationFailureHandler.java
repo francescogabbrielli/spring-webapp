@@ -20,6 +20,7 @@ public class WebAuthenticationFailureHandler extends SimpleUrlAuthenticationFail
         // salva l'errore in sessione: (TODO: migliorare per esempio passandolo in post?)
         request.getSession().removeAttribute("loginError");
         if (exception != null) {
+            exception.printStackTrace();
             setDefaultFailureUrl("/login?error");
             request.getSession().setAttribute("loginError", exception);
         }

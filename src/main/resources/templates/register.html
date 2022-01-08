@@ -37,10 +37,14 @@
                 <input type="text" th:field="*{birthday}" th:required="required" class="form-control" id="birthday" />
             </div>
 
-            <p><button class="w-50 btn btn-lg btn-primary" type="submit">Vai!</button></p>
-            <p><br/></p>
+            <hr/>
+
+            <button class="w-50 btn btn-lg btn-primary" type="submit">Vai!</button>
+
+            <p><br/><a th:href="@{/login}">Oppure Entra</a></p>
 
         </form>
+        
 
         <!-- errori di validazione -->
         <div class="alert alert-warning alert-dismissible fade show" th:if="${errors!=null}" th:each="error: ${errors}">

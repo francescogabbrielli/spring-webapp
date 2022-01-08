@@ -12,4 +12,7 @@ public class MainController {
     @GetMapping("/error")
     public String error() { return "error"; }
 
+    @GetMapping("/user/dashboard")
+    public String dash() { return "user/dashboard"; }
+
 }
